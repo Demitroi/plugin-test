@@ -18,7 +18,7 @@ func TestFilterEvent(t *testing.T) {
 		JSONFormat: true,
 	})
 	// Crear incrementador
-	incrementador := inc10.Incrementar10{Logger: logger}
+	incrementador := &inc10.Incrementar10{Logger: logger}
 	// Abrir el evento de prueba
 	eventByte, err := ioutil.ReadFile("testdata/example.xml")
 	if err != nil {
