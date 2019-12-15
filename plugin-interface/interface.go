@@ -2,6 +2,8 @@ package plugininterface
 
 import (
 	"net/rpc"
+
+	"github.com/hashicorp/go-plugin"
 )
 
 // FilterEvent es la interface que deben implementar los plugins que filtran eventos
@@ -31,4 +33,20 @@ func (f *FilterEventRPCServer) FilterEvent(event []byte, filtered *[]byte) error
 	v, err := f.Impl.FilterEvent(event)
 	*filtered = v
 	return err
+}
+
+// FilterEventPlugin es la implementacion de la interface Plugin
+type FilterEventPlugin struct {
+	// Impl injeccion de la implementacion
+	Impl FilterEvent
+}
+
+// Server retorna un servidor RPC, en este caso la estructura FilterEventRPCServer
+func (p *FilterEventPlugin) Server(b *plugin.MuxBroker) (interface{}, error) {
+	return &FilterEventRPCServer{Impl: p.Impl}, nil
+}
+
+// Client regresa una implementacion de nuestra interface que se comunica por RFC, en este caso la estructura FilterEventRPCClient
+func (p *FilterEventPlugin) Client(b *plugin.MuxBroker, c *rpc.Client) (interface{}, error) {
+	return &FilterEventRPCClient{client: c}, nil
 }
