@@ -1,4 +1,6 @@
-### Leeme
+[![Build Status](https://travis-ci.org/Demitroi/plugin-test.svg?branch=master)](https://travis-ci.org/Demitroi/plugin-test)
+
+### Plugin Test
 
 Ejemplo de implementacion de plugins en go utilizando rpc con la libreria https://github.com/hashicorp/go-plugin 
 
